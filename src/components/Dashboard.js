@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { Table, Container, Row, Col, Button } from "reactstrap";
+import { Table, Container, Row, Col } from "reactstrap";
 import {store, getUsers} from '../Redux';
-import { Redirect } from "react-router-dom";
 
 class Dashboard extends Component {
   constructor() {
@@ -9,8 +8,7 @@ class Dashboard extends Component {
     this.state = {
       users: [],
       loading: false,
-      error: false,
-      signout: false
+      error: false
     };
 
     store.subscribe(() => {
@@ -23,20 +21,11 @@ class Dashboard extends Component {
     });
   }
 
-  logout = () => {
-    this.setState({
-      signout: true
-    });
-  };
-
   componentDidMount() {
     store.dispatch(getUsers());
   }
 
   render() {
-    if (this.state.signout) {
-      return <Redirect to="/" push={true} />;
-    }
     if (this.state.loading === true) {
       return(
       <React.Fragment>
@@ -96,9 +85,6 @@ class Dashboard extends Component {
                   })}
                 </tbody>
               </Table>
-              <Button color="danger" onClick={this.logout}>
-                Logout
-              </Button>
             </Col>
           </Row>
         </Container>

@@ -19,6 +19,7 @@ class Login extends Component {
       password: "",
       loading: false,
       error: false,
+      errorMsg: "",
       loginStatus: false
     };
 
@@ -33,11 +34,15 @@ class Login extends Component {
   }
 
   onSubmit = () => {
-      if(this.state.username === '' || this.state.password === '') {
-          alert("feilds should be empty")
-          return
-      } 
-      
+    if (this.state.username === "" || this.state.password === "") {
+      this.setState({
+        errorMsg: "Feilds should not be empty"
+      });
+    } else if (this.state.username !== "" && this.state.password !== "") {
+      this.setState({
+        errorMsg: "Please enter valid login details"
+      });
+    }
     store.dispatch(verifyLogin(this.state.username, this.state.password));
   };
 
@@ -54,7 +59,7 @@ class Login extends Component {
   };
 
   render() {
-    if (this.state.loginStatus == true) {
+    if (this.state.loginStatus === true) {
       return <Redirect to="/dashboard"></Redirect>;
     }
 
@@ -100,6 +105,11 @@ class Login extends Component {
                 <Button color="success" onClick={this.onSubmit}>
                   Login
                 </Button>
+                {this.state.errorMsg !== "" && (
+                  <div className="text-danger mt-4 font-weight-bolder">
+                    <p>{this.state.errorMsg}</p>
+                  </div>
+                )}
               </Form>
             </Col>
           </Row>
