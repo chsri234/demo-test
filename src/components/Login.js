@@ -38,7 +38,7 @@ class Login extends Component {
       this.setState({
         errorMsg: "Feilds should not be empty"
       });
-    } else if (this.state.username !== "" && this.state.password !== "") {
+    } else if (this.state.username !== "hruday@gmail.com" && this.state.password !== "hruday123") {
       this.setState({
         errorMsg: "Please enter valid login details"
       });
